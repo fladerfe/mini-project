@@ -32,7 +32,8 @@ const registerEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   API_V1_VERSION_PREFIX,
   APIPath.AUTH,
-  AuthApiPath.SIGN_UP
+  AuthApiPath.SIGN_UP,
+  AuthApiPath.SIGN_IN
 ]);
 
 describe(`${authApiPath} routes`, () => {

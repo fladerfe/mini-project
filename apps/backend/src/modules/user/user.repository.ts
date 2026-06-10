@@ -21,6 +21,14 @@ class User
 
     return user ?? null;
   }
+
+  public async getEmailWithPassword(email: string): Promise<null | TUser> {
+    const user = await this.model
+      .query()
+      .findOne({ email });
+    
+    return user ?? null;
+  }
 }
 
 export { User };
