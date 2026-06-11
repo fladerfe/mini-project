@@ -7,7 +7,7 @@ import {
   type UserSignInRequestDto,
   type UserSignInResponseDto,
   type UserSignUpRequestDto,
-  type UserSignUpResponseDto,
+  type UserSignUpResponseDto
 } from './types.js';
 
 type AuthController = {
@@ -17,7 +17,7 @@ type AuthController = {
     }>
   ) => Promise<ControllerAPIHandlerResponse<UserSignUpResponseDto>>;
   signIn: (
-  options: ControllerAPIHandlerOptions<{
+    options: ControllerAPIHandlerOptions<{
       body: UserSignInRequestDto;
     }>
   ) => Promise<ControllerAPIHandlerResponse<UserSignInResponseDto>>;

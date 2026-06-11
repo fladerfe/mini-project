@@ -18,7 +18,10 @@ import {
   type UserSignUpRequestDto,
   type UserSignUpResponseDto
 } from './libs/types/types.js';
-import { signInValidationSchema, signUpValidationSchema } from './libs/validation-schemas/validation-schemas.js';
+import {
+  signInValidationSchema,
+  signUpValidationSchema
+} from './libs/validation-schemas/validation-schemas.js';
 
 type Constructor = {
   apiPath: ValueOf<typeof APIPath>;
@@ -48,8 +51,8 @@ class Auth extends Controller implements AuthController {
     return {
       payload: await this.#authService.signIn(options.body),
       status: HTTPCode.OK
-    }
-  }
+    };
+  };
 
   public constructor({ apiPath, authService, logger }: Constructor) {
     super({ apiPath, logger });

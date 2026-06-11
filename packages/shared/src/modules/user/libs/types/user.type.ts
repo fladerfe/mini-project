@@ -2,7 +2,7 @@ type User = {
   createdAt: string;
   email: string;
   id: number;
-  // password: string;
+  password: string;
   updatedAt: string;
 };
 

@@ -2,7 +2,7 @@ import {
   type UserSignInRequestDto,
   type UserSignInResponseDto,
   type UserSignUpRequestDto,
-  type UserSignUpResponseDto,
+  type UserSignUpResponseDto
 } from './types.js';
 
 type AuthService = {

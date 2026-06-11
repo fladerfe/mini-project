@@ -25,7 +25,7 @@ class Auth implements AuthService {
   public signIn = async (
     payload: UserSignInRequestDto
   ): Promise<UserSignInResponseDto> => {
-    const user = await this.#userService.getByEmailWithPassword(payload)
+    const user = await this.#userService.getByEmailWithPassword(payload);
 
     if (!user) {
       throw new HTTPError({
@@ -41,13 +41,11 @@ class Auth implements AuthService {
       });
     }
 
-    const { password, ...userWithoutPassword } = user;
-
     return {
       token: `token from ${JSON.stringify({ id: user.id })}`,
-      user: userWithoutPassword
-    }
-  }
+      user
+    };
+  };
 
   public constructor({ userService }: Constructor) {
     this.#userService = userService;
