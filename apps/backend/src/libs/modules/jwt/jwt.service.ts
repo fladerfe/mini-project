@@ -16,6 +16,10 @@ class JWT implements JWTService {
   public generateToken(userId: number): string {
     return jsonwebtoken.sign({ id: userId }, this.#secret, { expiresIn: '1d' });
   }
+
+  public verifyToken(token: string): { id: number } {
+    return jsonwebtoken.verify(token, this.#secret) as { id: number };
+  }
 }
 
 export { JWT };

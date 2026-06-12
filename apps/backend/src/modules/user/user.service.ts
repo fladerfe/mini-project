@@ -36,6 +36,10 @@ class User implements UserService {
       payload.email
     ) as Promise<TUser>;
   }
+
+  public getById(id: number): Promise<null | TUser> {
+    return this.#userRepository.getById(id);
+  }
 }
 
 export { User };

@@ -1,3 +1,5 @@
+import { HTTPError } from '@thread-js/shared';
+
 import { type APIPath } from '~/libs/enums/enums.js';
 import {
   Controller,
@@ -13,6 +15,7 @@ import { AuthApiPath } from './libs/enums/enums.js';
 import {
   type AuthController,
   type AuthService,
+  type User,
   type UserSignInRequestDto,
   type UserSignInResponseDto,
   type UserSignUpRequestDto,
@@ -54,9 +57,41 @@ class Auth extends Controller implements AuthController {
     };
   };
 
+  public getCurrent = async (
+    options: ControllerAPIHandlerOptions<{
+      headers: {
+        authorization?: string;
+      };
+    }>
+  ): Promise<ControllerAPIHandlerResponse<User>> => {
+    const { authorization } = options.headers;
+
+    if (!authorization) {
+      throw new HTTPError({
+        message: 'Unauthorized',
+        status: HTTPCode.UNAUTHORIZED
+      });
+    }
+
+    const token = authorization.replace('Bearer ', '');
+
+    const user = await this.#authService.getCurrent(token);
+
+    return {
+      payload: user,
+      status: HTTPCode.OK
+    };
+  };
+
   public constructor({ apiPath, authService, logger }: Constructor) {
     super({ apiPath, logger });
     this.#authService = authService;
+
+    this.addRoute({
+      handler: this.getCurrent as ControllerAPIHandler,
+      method: HTTPMethod.GET,
+      url: AuthApiPath.CURRENT
+    });
 
     this.addRoute({
       handler: this.signIn as ControllerAPIHandler,
