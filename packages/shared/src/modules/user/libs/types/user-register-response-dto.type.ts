@@ -5,6 +5,9 @@ type UserSignInResponseDto = {
   user: User;
 };
 
-type UserSignUpResponseDto = User;
+type UserSignUpResponseDto = {
+  token: string;
+  user: User;
+};
 
 export { type UserSignInResponseDto, type UserSignUpResponseDto };

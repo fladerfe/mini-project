@@ -1,5 +1,7 @@
 import { HTTPCode, HTTPError } from '@thread-js/shared';
 
+import { type JWTService } from '~/libs/modules/jwt/jwt.js';
+
 import { type UserService } from '../user/user.js';
 import {
   type AuthService,
@@ -10,16 +12,23 @@ import {
 } from './libs/types/types.js';
 
 type Constructor = {
+  jwt: JWTService;
   userService: UserService;
 };
 
 class Auth implements AuthService {
   #userService: UserService;
+  #jwt: JWTService;
 
   public register = async (
     userRequestDto: UserSignUpRequestDto
   ): Promise<UserSignUpResponseDto> => {
-    return await this.#userService.create(userRequestDto);
+    const user = await this.#userService.create(userRequestDto);
+
+    return {
+      token: this.#jwt.generateToken(user.id),
+      user
+    };
   };
 
   public signIn = async (
@@ -41,13 +50,16 @@ class Auth implements AuthService {
       });
     }
 
+    const token = this.#jwt.generateToken(user.id);
+
     return {
-      token: `token from ${JSON.stringify({ id: user.id })}`,
+      token,
       user
     };
   };
 
-  public constructor({ userService }: Constructor) {
+  public constructor({ jwt, userService }: Constructor) {
+    this.#jwt = jwt;
     this.#userService = userService;
   }
 }

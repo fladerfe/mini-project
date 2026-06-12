@@ -142,7 +142,7 @@ describe(`${authApiPath} routes`, () => {
       );
 
       const savedDatabaseUser = await select({
-        condition: { id: response.json<UserSignUpResponseDto>().id },
+        condition: { id: response.json<UserSignUpResponseDto>().user.id },
         limit: KNEX_SELECT_ONE_RECORD,
         table: DatabaseTableName.USERS
       });
