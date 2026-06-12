@@ -8,6 +8,7 @@ import { type User } from './types.js';
 type UserService = {
   create(payload: UserSignUpRequestDto): Promise<User>;
   getByEmailWithPassword(payload: UserSignInRequestDto): Promise<null | User>;
+  getById(id: number): Promise<null | User>;
 };
 
 export { type UserService };

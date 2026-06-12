@@ -1,4 +1,5 @@
 import {
+  type User,
   type UserSignInRequestDto,
   type UserSignInResponseDto,
   type UserSignUpRequestDto,
@@ -6,6 +7,7 @@ import {
 } from './types.js';
 
 type AuthService = {
+  getCurrent(_token: string): Promise<User>;
   register(_user: UserSignUpRequestDto): Promise<UserSignUpResponseDto>;
   signIn(_user: UserSignInRequestDto): Promise<UserSignInResponseDto>;
 };

@@ -5,6 +5,7 @@ import { type JWTService } from '~/libs/modules/jwt/jwt.js';
 import { type UserService } from '../user/user.js';
 import {
   type AuthService,
+  type User,
   type UserSignInRequestDto,
   type UserSignInResponseDto,
   type UserSignUpRequestDto,
@@ -19,6 +20,21 @@ type Constructor = {
 class Auth implements AuthService {
   #userService: UserService;
   #jwt: JWTService;
+
+  public getCurrent = async (token: string): Promise<User> => {
+    const payload = this.#jwt.verifyToken(token);
+
+    const user = await this.#userService.getById(payload.id);
+
+    if (!user) {
+      throw new HTTPError({
+        message: 'User not found',
+        status: HTTPCode.NOT_FOUND
+      });
+    }
+
+    return user;
+  };
 
   public register = async (
     userRequestDto: UserSignUpRequestDto

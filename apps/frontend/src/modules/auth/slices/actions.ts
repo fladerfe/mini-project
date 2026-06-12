@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { StorageKey } from '~/libs/enums/enums.js';
 import { type AsyncThunkConfig } from '~/libs/types/types.js';
 import {
+  type User,
   type UserSignInRequestDto,
   type UserSignInResponseDto,
   type UserSignUpRequestDto,
@@ -11,6 +12,19 @@ import {
 import { storageApi } from '~/modules/storage/storage.js';
 
 import { ActionType } from './common.js';
+
+const getCurrentUser = createAsyncThunk<User, undefined, AsyncThunkConfig>(
+  ActionType.GET_CURRENT_USER,
+  async (_, { extra: { authApi } }) => {
+    try {
+      return await authApi.getCurrentUser();
+    } catch (error) {
+      storageApi.drop(StorageKey.TOKEN);
+
+      throw error;
+    }
+  }
+);
 
 const signUp = createAsyncThunk<
   UserSignUpResponseDto,
@@ -36,4 +50,4 @@ const signIn = createAsyncThunk<
   return response;
 });
 
-export { signIn, signUp };
+export { getCurrentUser, signIn, signUp };
