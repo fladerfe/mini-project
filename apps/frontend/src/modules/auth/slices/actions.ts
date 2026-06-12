@@ -17,7 +17,11 @@ const signUp = createAsyncThunk<
   UserSignUpRequestDto,
   AsyncThunkConfig
 >(ActionType.SIGN_UP, async (request, { extra: { authApi } }) => {
-  return await authApi.signUp(request);
+  const response = await authApi.signUp(request);
+
+  storageApi.set(StorageKey.TOKEN, response.token);
+
+  return response;
 });
 
 const signIn = createAsyncThunk<

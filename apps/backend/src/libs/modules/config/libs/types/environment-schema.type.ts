@@ -20,6 +20,9 @@ type EnvironmentSchema = {
     TEST_DATABASE: string;
     USERNAME: string;
   };
+  JWT: {
+    SECRET: string;
+  };
 };
 
 export { type EnvironmentSchema };
