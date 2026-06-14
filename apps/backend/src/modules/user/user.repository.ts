@@ -16,14 +16,8 @@ class User
   public async getByEmail(email: string): Promise<null | TUser> {
     const user = await this.model
       .query()
-      .select(['id', 'email', 'createdAt', 'updatedAt'])
+      .modify('withoutPassword')
       .findOne({ email });
-
-    return user ?? null;
-  }
-
-  public async getByEmailWithPassword(email: string): Promise<null | TUser> {
-    const user = await this.model.query().findOne({ email });
 
     return user ?? null;
   }

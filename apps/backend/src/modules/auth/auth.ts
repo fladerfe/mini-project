@@ -1,5 +1,4 @@
 import { APIPath } from '~/libs/enums/enums.js';
-import { jwt } from '~/libs/modules/jwt/jwt.js';
 import { logger } from '~/libs/modules/logger/logger.js';
 import { userService } from '~/modules/user/user.js';
 
@@ -7,7 +6,6 @@ import { Auth as AuthController } from './auth.controller.js';
 import { Auth as AuthService } from './auth.service.js';
 
 const authService = new AuthService({
-  jwt,
   userService
 });
 const authController = new AuthController({

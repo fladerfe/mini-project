@@ -12,12 +12,10 @@ export {
   type ValidationSchema,
   type ValueOf
 } from './libs/types/types.js';
-export { AuthApiPath, signIn, signUp } from './modules/auth/auth.js';
+export { AuthApiPath, signUp } from './modules/auth/auth.js';
 export {
   type User,
   UserPayloadKey,
-  type UserSignInRequestDto,
-  type UserSignInResponseDto,
   type UserSignUpRequestDto,
   type UserSignUpResponseDto,
   UserValidationMessage,

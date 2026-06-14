@@ -1,41 +1,21 @@
 import { Button, Input, NavLink } from '~/libs/components/components.js';
-import { AppRoute, ButtonColor, DataStatus } from '~/libs/enums/enums.js';
-import { useAppForm, useAppSelector } from '~/libs/hooks/hooks.js';
-import { type UserSignInRequestDto } from '~/modules/auth/auth.js';
-import { signIn as signInValidationSchema } from '~/modules/auth/libs/validation-schemas/validation-schemas.js';
+import { AppRoute, ButtonColor } from '~/libs/enums/enums.js';
+import { useAppForm } from '~/libs/hooks/hooks.js';
 import { UserPayloadKey } from '~/modules/user/user.js';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './libs/common/constants.js';
 import styles from './styles.module.scss';
 
-type Properties = {
-  onSubmit: (payload: UserSignInRequestDto) => void;
-};
-
-const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
-  const { control, errors, handleSubmit, reset } = useAppForm({
-    defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-    validationSchema: signInValidationSchema
+const SignInForm: React.FC = () => {
+  const { control, errors } = useAppForm({
+    defaultValues: DEFAULT_SIGN_IN_PAYLOAD
   });
-
-  const error = useAppSelector(({ auth }) => auth.error);
-
-  const authDataStatus = useAppSelector(({ auth }) => {
-    return auth.dataStatus;
-  });
-
-  const isLoading = authDataStatus === DataStatus.PENDING;
-
-  const handleFormSubmit = (values: UserSignInRequestDto): void => {
-    onSubmit(values);
-    reset();
-  };
 
   return (
     <>
       <h2 className={styles['title']}>Login to your account</h2>
-      <form name="loginForm" onSubmit={handleSubmit(handleFormSubmit)}>
-        <fieldset className={styles['fieldset']} disabled={isLoading}>
+      <form name="loginForm">
+        <fieldset className={styles['fieldset']}>
           <Input
             control={control}
             errors={errors}
@@ -53,7 +33,6 @@ const SignInForm: React.FC<Properties> = ({ onSubmit }) => {
           <Button color={ButtonColor.TEAL} isFluid isPrimary type="submit">
             Sign In
           </Button>
-          {error && <p className={styles['error']}>{error}</p>}
         </fieldset>
       </form>
       <div>
