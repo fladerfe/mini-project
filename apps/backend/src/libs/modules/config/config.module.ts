@@ -112,6 +112,14 @@ class Config implements ConfigModule {
           env: 'DB_USERNAME',
           format: String
         }
+      },
+      JWT: {
+        SECRET: {
+          default: null,
+          doc: 'JWT secret key',
+          env: 'JWT_SECRET',
+          format: String
+        }
       }
     });
   }

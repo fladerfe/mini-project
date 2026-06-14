@@ -8,7 +8,7 @@ class Logger implements LoggerModule {
   public constructor() {
     this.logger = pino({ transport: { target: 'pino-pretty' } });
 
-    this.logger.info('Logger is created…');
+    this.logger.info('Logger is created');
   }
 
   public debug(

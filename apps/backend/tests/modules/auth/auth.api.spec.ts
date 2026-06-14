@@ -32,7 +32,8 @@ const registerEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   API_V1_VERSION_PREFIX,
   APIPath.AUTH,
-  AuthApiPath.SIGN_UP
+  AuthApiPath.SIGN_UP,
+  AuthApiPath.SIGN_IN
 ]);
 
 describe(`${authApiPath} routes`, () => {
@@ -141,7 +142,7 @@ describe(`${authApiPath} routes`, () => {
       );
 
       const savedDatabaseUser = await select({
-        condition: { id: response.json<UserSignUpResponseDto>().id },
+        condition: { id: response.json<UserSignUpResponseDto>().user.id },
         limit: KNEX_SELECT_ONE_RECORD,
         table: DatabaseTableName.USERS
       });
