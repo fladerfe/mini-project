@@ -7,7 +7,7 @@ import {
 } from './types.js';
 
 type AuthService = {
-  getCurrent(_token: string): Promise<User>;
+  getCurrent(_id: number): Promise<User>;
   register(_user: UserSignUpRequestDto): Promise<UserSignUpResponseDto>;
   signIn(_user: UserSignInRequestDto): Promise<UserSignInResponseDto>;
 };

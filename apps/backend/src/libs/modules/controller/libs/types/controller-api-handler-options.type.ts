@@ -5,6 +5,7 @@ type ControllerAPIHandlerOptions<
   headers: T['headers'];
   params: T['params'];
   query: T['query'];
+  user?: T['user'];
 };
 
 type DefaultApiHandlerOptions = {
@@ -12,6 +13,7 @@ type DefaultApiHandlerOptions = {
   headers?: unknown;
   params?: unknown;
   query?: unknown;
+  user?: unknown;
 };
 
 export { type ControllerAPIHandlerOptions };
