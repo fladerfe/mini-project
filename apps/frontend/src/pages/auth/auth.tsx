@@ -5,11 +5,7 @@ import {
   useCallback,
   useLocation
 } from '~/libs/hooks/hooks.js';
-import {
-  authActions,
-  type UserSignInRequestDto,
-  type UserSignUpRequestDto
-} from '~/modules/auth/auth.js';
+import { authActions, type UserSignUpRequestDto } from '~/modules/auth/auth.js';
 
 import { SignInForm, SignUpForm } from './components/components.js';
 import styles from './styles.module.scss';
@@ -25,17 +21,10 @@ const Auth: React.FC = () => {
     [dispatch]
   );
 
-  const handleSignInSubmit = useCallback(
-    (payload: UserSignInRequestDto): void => {
-      void dispatch(authActions.signIn(payload));
-    },
-    [dispatch]
-  );
-
   const getScreen = (path: string): null | React.JSX.Element => {
     switch (path) {
       case AppRoute.SIGN_IN: {
-        return <SignInForm onSubmit={handleSignInSubmit} />;
+        return <SignInForm />;
       }
 
       case AppRoute.SIGN_UP: {

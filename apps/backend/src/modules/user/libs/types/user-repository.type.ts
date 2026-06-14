@@ -4,7 +4,6 @@ import { type User } from './types.js';
 
 type UserRepository = Pick<Repository<User>, 'create'> & {
   getByEmail(_email: string): Promise<null | User>;
-  getByEmailWithPassword(_email: string): Promise<null | User>;
 };
 
 export { type UserRepository };

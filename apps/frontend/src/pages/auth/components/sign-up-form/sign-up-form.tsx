@@ -18,8 +18,6 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     validationSchema: signUpValidationSchema
   });
 
-  const error = useAppSelector(({ auth }) => auth.error);
-
   const authDataStatus = useAppSelector(({ auth }) => {
     return auth.dataStatus;
   });
@@ -59,7 +57,6 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
           >
             Sign Up
           </Button>
-          {error && <p className={styles['error']}>{error}</p>}
         </fieldset>
       </form>
       <div>
