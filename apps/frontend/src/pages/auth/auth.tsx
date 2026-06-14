@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-
 import { Image } from '~/libs/components/components.js';
 import { AppRoute } from '~/libs/enums/enums.js';
 import {
   useAppDispatch,
-  useAppSelector,
   useCallback,
   useLocation
 } from '~/libs/hooks/hooks.js';
@@ -21,15 +17,6 @@ import styles from './styles.module.scss';
 const Auth: React.FC = () => {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-
-  const authUser = useAppSelector(({ auth }) => auth.user);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authUser) {
-      void navigate(AppRoute.ROOT);
-    }
-  }, [authUser, navigate]);
 
   const handleSignUpSubmit = useCallback(
     (payload: UserSignUpRequestDto): void => {
