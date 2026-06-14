@@ -9,12 +9,14 @@ import { getCurrentUser, signIn, signUp } from './actions.js';
 type State = {
   dataStatus: ValueOf<typeof DataStatus>;
   error: null | string;
+  isAuthChecked: boolean;
   user: null | User;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   error: null,
+  isAuthChecked: false,
   user: null
 };
 
@@ -28,23 +30,24 @@ const { actions, reducer } = createSlice({
           state.error = null;
         }
       )
-      .addMatcher(isAnyOf(signUp.fulfilled), (state, action) => {
-        state.user = action.payload.user;
-        state.dataStatus = DataStatus.FULFILLED;
-        state.error = null;
-      })
-      .addMatcher(isAnyOf(signIn.fulfilled), (state, action) => {
-        state.user = action.payload.user;
-        state.dataStatus = DataStatus.FULFILLED;
-        state.error = null;
-      })
+      .addMatcher(
+        isAnyOf(signUp.fulfilled, signIn.fulfilled),
+        (state, action) => {
+          state.user = action.payload.user;
+          state.dataStatus = DataStatus.FULFILLED;
+          state.error = null;
+          state.isAuthChecked = true;
+        }
+      )
       .addMatcher(isAnyOf(getCurrentUser.fulfilled), (state, action) => {
         state.user = action.payload;
         state.dataStatus = DataStatus.FULFILLED;
+        state.isAuthChecked = true;
       })
       .addMatcher(isAnyOf(getCurrentUser.rejected), state => {
         state.user = null;
         state.dataStatus = DataStatus.REJECTED;
+        state.isAuthChecked = true;
       })
       .addMatcher(
         isAnyOf(signUp.rejected, signIn.rejected),
@@ -57,7 +60,11 @@ const { actions, reducer } = createSlice({
   },
   initialState,
   name: 'auth',
-  reducers: {}
+  reducers: {
+    setAuthChecked(state) {
+      state.isAuthChecked = true;
+    }
+  }
 });
 
 export { actions, reducer };
