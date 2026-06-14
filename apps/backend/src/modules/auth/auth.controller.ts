@@ -59,26 +59,20 @@ class Auth extends Controller implements AuthController {
 
   public getCurrent = async (
     options: ControllerAPIHandlerOptions<{
-      headers: {
-        authorization?: string;
+      user: {
+        id: number;
       };
     }>
   ): Promise<ControllerAPIHandlerResponse<User>> => {
-    const { authorization } = options.headers;
-
-    if (!authorization) {
+    if (!options.user) {
       throw new HTTPError({
         message: 'Unauthorized',
         status: HTTPCode.UNAUTHORIZED
       });
     }
 
-    const token = authorization.replace('Bearer ', '');
-
-    const user = await this.#authService.getCurrent(token);
-
     return {
-      payload: user,
+      payload: await this.#authService.getCurrent(options.user.id),
       status: HTTPCode.OK
     };
   };

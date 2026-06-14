@@ -13,6 +13,7 @@ import { type ConfigModule } from '~/libs/modules/config/config.js';
 import { joinPath } from '~/libs/modules/path/path.js';
 import { type ValidationSchema } from '~/libs/types/types.js';
 
+import { authorizationPlugin } from '../authorization/authorization.js';
 import { type DatabaseModule } from '../database/database.js';
 import { type LoggerModule } from '../logger/logger.js';
 import { getErrorInfo } from './libs/helpers/helpers.js';
@@ -82,6 +83,7 @@ class ServerApp {
 
   public initialize = async (): Promise<typeof this> => {
     this.#initValidationCompiler();
+    authorizationPlugin.register(this.app);
     await this.#registerServe();
     this.#registerRoutes();
     this.#initErrorHandler();

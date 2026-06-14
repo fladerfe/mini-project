@@ -21,10 +21,8 @@ class Auth implements AuthService {
   #userService: UserService;
   #jwt: JWTService;
 
-  public getCurrent = async (token: string): Promise<User> => {
-    const payload = this.#jwt.verifyToken(token);
-
-    const user = await this.#userService.getById(payload.id);
+  public getCurrent = async (userId: number): Promise<User> => {
+    const user = await this.#userService.getById(userId);
 
     if (!user) {
       throw new HTTPError({
